@@ -1,5 +1,6 @@
 package cn.merryyou.editor.editor.web;
 
+import cn.merryyou.editor.editor.domain.Editor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,7 +20,8 @@ public class IndexController {
     @RequestMapping("/")
     public ModelAndView index(Map map) {
         ModelAndView mav = new ModelAndView();
-        map.put("hello", "hello");
+
+        map.put("editor", new Editor());
         return new ModelAndView("index", map);
     }
 }

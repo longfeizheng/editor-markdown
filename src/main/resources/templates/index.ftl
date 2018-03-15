@@ -10,7 +10,9 @@
 <body>
 <div id="layout">
     <div id="test-editormd">
-                <textarea style="display:none;">[TOC]
+                <textarea style="display:none;" id="textContent" name="textContent">
+                    <#if editor.textContent=="">
+[TOC]
 
 #### Disabled options
 
@@ -31,7 +33,7 @@
             images/
             plugins/
             examples/
-            languages/     
+            languages/
             editormd.js
             ...
 
@@ -42,6 +44,11 @@
 &lt;!-- 繁體中文 --&gt;
 &lt;script src="../dist/js/languages/zh-tw.js"&gt;&lt;/script&gt;
 ```
+<#else>
+${editor.textContent!''}
+</#if>
+
+
 </textarea>
         <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
         <textarea id="text" class="editormd-html-textarea" name="text"></textarea>
@@ -61,9 +68,9 @@
             height: 640,
             syncScrolling: "single",
             path: "${re.contextPath}/editor/lib/",
-            imageUpload : true,
-            imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-            imageUploadURL : "/file",
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL: "/file",
             //这个配置在simple.html中并没有，但是为了能够提交表单，使用这个配置可以让构造出来的HTML代码直接在第二个隐藏的textarea域中，方便post提交表单。
             saveHTMLToTextarea: true
             // previewTheme : "dark"
@@ -71,26 +78,26 @@
     });
 
     function saveHtml() {
-        console.log($("#text").text());
+        // console.log($("#text").text());
+        console.log($("#textContent").text());
         $.ajax({
             url: "${re.contextPath}/editorWeb",
             type: "post",
             async: true,
             data: {
-                "content": $("#text").text()
+                "content": $("#text").text(),
+                "textContent": $("#textContent").text()
             },
             dataType: "json",
             success: function (data) {
-                alert(data);
+            alert(data.msg);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status);
-                alert(XMLHttpRequest.readyState);
-                alert(textStatus); // paser error;
+            alert(XMLHttpRequest.status);
+            alert(XMLHttpRequest.readyState);
+            alert(textStatus); // paser error;
             }
-
-        })
-        ;
+        });
     }
 </script>
 </body>

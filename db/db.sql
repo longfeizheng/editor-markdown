@@ -21,6 +21,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `editor`;
 CREATE TABLE `editor` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `text_content` longtext,
   `content` longtext,
   `create_time` date DEFAULT NULL,
   PRIMARY KEY (`id`)

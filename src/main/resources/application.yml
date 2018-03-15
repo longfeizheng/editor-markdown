@@ -30,3 +30,5 @@ spring:
       max-request-size: 10Mb
 img:
   location: D:/upload/
+logging:
+  level: debug
